@@ -5,15 +5,16 @@
 #define IN3 9
 #define IN4 12
 #define TGT_line 3
-#define Kp 15
-#define MOTOR_OFFSET_A 100
-#define MOTOR_OFFSET_B 100
+#define Kp 40
+#define MOTOR_OFFSET_A 90
+#define MOTOR_OFFSET_B 90
 
 void read_sensor();
 void monitoring_sensor();
 void on_led_whitebackground();
 void pControl(int current_line);
 void check_sensor();
+void drive_white_background();
 
 int white_current_line();
 int sensor_value[5];                                                                                                                                                                                                                                                                                       
@@ -39,13 +40,7 @@ void setup() {
 }
 
 void loop() {
-  int current_line;
-  read_sensor();
-  //monitoring_sensor();
-  on_led_whitebackground();
-  current_line=white_current_line();
-  pControl(current_line);  
-  Serial.println(current_line);
+  drive_white_background();
 }
 
 void read_sensor()
@@ -69,31 +64,31 @@ void monitoring_sensor()
 
 void on_led_whitebackground()
 {
-  if(sensor_value[0]<std_sensor[0]){
+  if(sensor_value[0]>std_sensor[0]){
     digitalWrite(2, LOW);
   }
   else{
     digitalWrite(2, HIGH);
   }
-  if(sensor_value[1]<std_sensor[1]){
+  if(sensor_value[1]>std_sensor[1]){
     digitalWrite(3, LOW);
   }
   else{
     digitalWrite(3, HIGH);
   }
-  if(sensor_value[2]<std_sensor[2]){
+  if(sensor_value[2]>std_sensor[2]){
     digitalWrite(4, LOW);
   }
   else{
     digitalWrite(4, HIGH);
   }
-  if(sensor_value[3]<std_sensor[3]){
+  if(sensor_value[3]>std_sensor[3]){
     digitalWrite(5, LOW);
   }
   else{
     digitalWrite(5, HIGH);
   }
-  if(sensor_value[4]<std_sensor[4]){
+  if(sensor_value[4]>std_sensor[4]){
     digitalWrite(6, LOW);
   }
   else{
@@ -108,8 +103,8 @@ void pControl(int current_line){
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, HIGH);
-  analogWrite(ENA, MOTOR_OFFSET_A + control_value);
-  analogWrite(ENB, MOTOR_OFFSET_B < control_value);
+  analogWrite(ENA, MOTOR_OFFSET_A - control_value);
+  analogWrite(ENB, MOTOR_OFFSET_B + control_value);
  
 }
 
@@ -159,4 +154,13 @@ void check_sensor(){
     std_sensor[i] = ( black_value[i] + white_value[i] ) / 2;
   }
   Serial.println("SETTING DONE");
+}
+void drive_white_background(){
+  int current_line;
+  read_sensor();
+  monitoring_sensor();
+  on_led_whitebackground();
+  current_line=white_current_line();
+  pControl(current_line);  
+  Serial.println(current_line);
 }
