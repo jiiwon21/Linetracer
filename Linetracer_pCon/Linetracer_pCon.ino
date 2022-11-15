@@ -12,11 +12,14 @@
 void read_sensor();
 void monitoring_sensor();
 void on_led_whitebackground();
+void on_led_blackbackground();
 void pControl(int current_line);
 void check_sensor();
-void drive_white_background();
-
 int white_current_line();
+int black_current_line();
+void drive_white_background();
+void drive_black_background();
+
 int sensor_value[5];                                                                                                                                                                                                                                                                                       
 int std_sensor[5]; //= {243,282,306,335,360};
 
@@ -40,7 +43,8 @@ void setup() {
 }
 
 void loop() {
-  drive_white_background();
+  //drive_white_background();
+  drive_black_background();
 }
 
 void read_sensor()
@@ -62,6 +66,39 @@ void monitoring_sensor()
   Serial.print("\n");
 }
 
+void on_led_blackbackground()
+{
+  if(sensor_value[0]<std_sensor[0]){
+    digitalWrite(2, LOW);
+  }
+  else{
+    digitalWrite(2, HIGH);
+  }
+  if(sensor_value[1]<std_sensor[1]){
+    digitalWrite(3, LOW);
+  }
+  else{
+    digitalWrite(3, HIGH);
+  }
+  if(sensor_value[2]<std_sensor[2]){
+    digitalWrite(4, LOW);
+  }
+  else{
+    digitalWrite(4, HIGH);
+  }
+  if(sensor_value[3]<std_sensor[3]){
+    digitalWrite(5, LOW);
+  }
+  else{
+    digitalWrite(5, HIGH);
+  }
+  if(sensor_value[4]<std_sensor[4]){
+    digitalWrite(6, LOW);
+  }
+  else{
+    digitalWrite(6, HIGH);
+  }
+}
 void on_led_whitebackground()
 {
   if(sensor_value[0]>std_sensor[0]){
@@ -115,7 +152,7 @@ int white_current_line(){
   else if(sensor_value[0]>std_sensor[0] && sensor_value[1]<std_sensor[1]){
     return 2;
   }
-  else if((sensor_value[0]>std_sensor[0] && sensor_value[1]<std_sensor[1] && sensor_value[2]<std_sensor[2] && sensor_value[3]<std_sensor[3]&&sensor_value[4]>std_sensor[4])||(sensor_value[0]>std_sensor[0]&&sensor_value[1]>std_sensor[1]&&sensor_value[2]<std_sensor[2]&&sensor_value[3]>std_sensor[3]&&sensor_value[4]>std_sensor[4])){
+  else if((sensor_value[0]>std_sensor[0] && sensor_value[1]<std_sensor[1] && sensor_value[2]<std_sensor[2] && sensor_value[3]<std_sensor[3] && sensor_value[4]>std_sensor[4])||(sensor_value[0]>std_sensor[0]&&sensor_value[1]>std_sensor[1]&&sensor_value[2]<std_sensor[2]&&sensor_value[3]>std_sensor[3]&&sensor_value[4]>std_sensor[4])){
     return 3;
   }
   else if(sensor_value[2]>std_sensor[2] && sensor_value[3]<std_sensor[3]){
@@ -124,6 +161,27 @@ int white_current_line(){
   else if(sensor_value[4]<std_sensor[4]){
     return 5;
   }
+}
+
+int black_current_line(){
+  if(sensor_value[0]>std_sensor[0]){
+    return 1;
+  }
+  else if(sensor_value[0]<std_sensor[0] && sensor_value[1]>std_sensor[1]){
+    return 2;
+  }
+  else if((sensor_value[0]<std_sensor[0] && sensor_value[1]>std_sensor[1] && sensor_value[2]>std_sensor[2] && sensor_value[3]>std_sensor[3] && sensor_value[4]<std_sensor[4])||(sensor_value[0]<std_sensor[0]&&sensor_value[1]<std_sensor[1] && sensor_value[2]>std_sensor[2] && sensor_value[3]<std_sensor[3] && sensor_value[4]<std_sensor[4])){
+    return 3;
+  }
+  else if(sensor_value[2]<std_sensor[2] && sensor_value[3]>std_sensor[3]){
+    return 4;
+  }
+  else if(sensor_value[4]>std_sensor[4]){
+    return 5;
+  }
+  /*else if(sensor_value[0]>std_sensor[0] && sensor_value[1]>std_sensor[1] && sensor_value[2]>std_sensor[2] && sensor_value[3]>std_sensor[3] && sensor_value[4]>std_sensor[4]){
+    return 3;
+  }*/
 }
 
 void check_sensor(){
@@ -161,6 +219,15 @@ void drive_white_background(){
   monitoring_sensor();
   on_led_whitebackground();
   current_line=white_current_line();
+  pControl(current_line);  
+  Serial.println(current_line);
+}
+void drive_black_background(){
+  int current_line;
+  read_sensor();
+  monitoring_sensor();
+  on_led_blackbackground();
+  current_line=black_current_line();
   pControl(current_line);  
   Serial.println(current_line);
 }
