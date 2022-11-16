@@ -5,7 +5,7 @@
 #define IN3 9
 #define IN4 12
 #define TGT_line 3
-#define Kp_WHITE 25
+#define Kp_WHITE 24
 #define Kp_BLACK 20
 #define MOTOR_OFFSET_A 70
 #define MOTOR_OFFSET_B 70
@@ -179,21 +179,23 @@ void pControl_black(int current_line){
 
 
 int whiteground_current_line(){
-  if(sensor_value[0]<std_sensor[0]){
-    return 1;
-  }
-  else if(sensor_value[0]>std_sensor[0] && sensor_value[1]<std_sensor[1]){
-    return 2;
-  }
-  else if((sensor_value[0]>std_sensor[0] && sensor_value[1]<std_sensor[1] && sensor_value[2]<std_sensor[2] && sensor_value[3]<std_sensor[3] && sensor_value[4]>std_sensor[4])||(sensor_value[0]>std_sensor[0]&&sensor_value[1]>std_sensor[1]&&sensor_value[2]<std_sensor[2]&&sensor_value[3]>std_sensor[3]&&sensor_value[4]>std_sensor[4])){
-    return 3;
+  if(sensor_value[4]<std_sensor[4]){
+    return 5;
   }
   else if(sensor_value[2]>std_sensor[2] && sensor_value[3]<std_sensor[3]){
     return 4;
   }
-  else if(sensor_value[4]<std_sensor[4]){
-    return 5;
+  else if((sensor_value[0]>std_sensor[0] && sensor_value[1]<std_sensor[1] && sensor_value[2]<std_sensor[2] && sensor_value[3]<std_sensor[3] && sensor_value[4]>std_sensor[4])||(sensor_value[0]>std_sensor[0]&&sensor_value[1]>std_sensor[1]&&sensor_value[2]<std_sensor[2]&&sensor_value[3]>std_sensor[3]&&sensor_value[4]>std_sensor[4])){
+    return 3;
   }
+  else if(sensor_value[0]>std_sensor[0] && sensor_value[1]<std_sensor[1]){
+    return 2;
+  }
+  else if(sensor_value[0]<std_sensor[0]){
+    return 1;
+  }  
+  
+  
  /*
   else if(sensor_value[0]>std_sensor[0] && sensor_value[1]>std_sensor[1] && sensor_value[2]>std_sensor[2] && sensor_value[3]>std_sensor[3] && sensor_value[4]>std_sensor[4]){
     return 3;
