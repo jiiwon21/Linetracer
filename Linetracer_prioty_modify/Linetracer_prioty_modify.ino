@@ -11,6 +11,7 @@
 #define MOTOR_OFFSET_B 70
 #define WHITE_BACKGROUND 0
 #define BLACK_BACKGROUND 1
+#define FINISH 2
 
 void read_sensor();
 void monitoring_sensor();
@@ -19,12 +20,16 @@ void on_led_blackbackground();
 void pControl_white(int current_line);
 void pControl_black(int current_line);
 void setting_sensor();
-int whiteground_current_line();
-int blackground_current_line();
 void drive_white_background();
 void drive_black_background();
+void stopp();
+
+int whiteground_current_line();
+int blackground_current_line();
+
 bool check_W2B();
 bool check_B2W();
+bool check_crossline();
 
 int STATE = WHITE_BACKGROUND;
 int sensor_value[5];                                                                                                                                                                                                                                                                                       
@@ -50,9 +55,9 @@ void setup() {
 }
 
 void loop() {
- // drive_white_background();
- // drive_black_background();
-  
+  if(check_crossline())
+    stopp();
+  /*
   switch (STATE)
   {
   case WHITE_BACKGROUND:
@@ -63,9 +68,15 @@ void loop() {
   case BLACK_BACKGROUND:
     drive_black_background();
     if(check_B2W())
-      STATE = WHITE_BACKGROUND;
+      STATE = FINISH;
+    break;
+  case FINISH:
+    if(check_crossline())
+      stopp();
+    drive_white_background();
     break;
   }
+  */
 }
 
 void read_sensor()
@@ -274,6 +285,15 @@ void drive_black_background(){
   Serial.println(current_line);
 }
 
+void stopp(){
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENA,0);
+  analogWrite(ENB,0);
+}
+
 
 bool check_W2B(){
   if( sensor_value[0]<std_sensor[0] && sensor_value[4]<std_sensor[4] && ( sensor_value[1]>std_sensor[1] || sensor_value[2]>std_sensor[2] || sensor_value[3]>std_sensor[3] )){
@@ -287,6 +307,14 @@ bool check_B2W(){
   if( sensor_value[0]>std_sensor[0]  && sensor_value[4]>std_sensor[4] && ( sensor_value[1]<std_sensor[1] || sensor_value[2]<std_sensor[2] || sensor_value[3]<std_sensor[3] )){
     Serial.println("B2W");
     return true;    
+  }
+  else 
+    return false;
+}
+bool check_crossline(){
+  if( sensor_value[0]<std_sensor[0] && sensor_value[1]<std_sensor[1] && sensor_value[2]<std_sensor[2] && sensor_value[3]<std_sensor[3] && sensor_value[4]<std_sensor[4]){
+    Serial.println("CROSS LINE");
+    return true;
   }
   else 
     return false;
