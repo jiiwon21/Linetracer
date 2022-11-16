@@ -5,7 +5,8 @@
 #define IN3 9
 #define IN4 12
 #define TGT_line 3
-#define Kp 40
+#define Kp_WHITE 40
+#define Kp_BLACK 20
 #define MOTOR_OFFSET_A 90
 #define MOTOR_OFFSET_B 90
 
@@ -13,7 +14,8 @@ void read_sensor();
 void monitoring_sensor();
 void on_led_whitebackground();
 void on_led_blackbackground();
-void pControl(int current_line);
+void pControl_white(int current_line);
+void pControl_black(int current_line);
 void setting_sensor();
 int whiteground_current_line();
 int blackground_current_line();
@@ -43,8 +45,15 @@ void setup() {
 }
 
 void loop() {
-  drive_white_background();
-  drive_black_background();
+  //drive_white_background();
+  //drive_black_background();
+  int current_line;
+  read_sensor();
+  //monitoring_sensor();
+  on_led_blackbackground();
+  current_line=blackground_current_line();
+  pControl_black(current_line);  
+  Serial.println(current_line);
 }
 
 void read_sensor()
@@ -133,9 +142,9 @@ void on_led_whitebackground()
   }
 }
 
-void pControl(int current_line){
-  int error = TGT_line < current_line;
-  int control_value = Kp*error;
+void pControl_white(int current_line){
+  int error = TGT_line - current_line;
+  int control_value = Kp_WHITE*error;
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, LOW);
@@ -144,6 +153,18 @@ void pControl(int current_line){
   analogWrite(ENB, MOTOR_OFFSET_B + control_value);
  
 }
+void pControl_black(int current_line){
+  int error = TGT_line - current_line;
+  int control_value = Kp_BLACK*error;
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENA, MOTOR_OFFSET_A + control_value);
+  analogWrite(ENB, MOTOR_OFFSET_B - control_value);
+ 
+}
+
 
 int whiteground_current_line(){
   if(sensor_value[0]<std_sensor[0]){
@@ -213,21 +234,23 @@ void setting_sensor(){
   }
   Serial.println("SETTING DONE");
 }
+
 void drive_white_background(){
   int current_line;
   read_sensor();
   monitoring_sensor();
   on_led_whitebackground();
   current_line=whiteground_current_line();
-  pControl(current_line);  
+  pControl_white(current_line);  
   Serial.println(current_line);
 }
+
 void drive_black_background(){
   int current_line;
   read_sensor();
   monitoring_sensor();
   on_led_blackbackground();
   current_line=blackground_current_line();
-  pControl(current_line);  
+  pControl_black(current_line);  
   Serial.println(current_line);
 }
