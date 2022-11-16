@@ -14,9 +14,9 @@ void monitoring_sensor();
 void on_led_whitebackground();
 void on_led_blackbackground();
 void pControl(int current_line);
-void check_sensor();
-int white_current_line();
-int black_current_line();
+void setting_sensor();
+int whiteground_current_line();
+int blackground_current_line();
 void drive_white_background();
 void drive_black_background();
 
@@ -25,7 +25,7 @@ int std_sensor[5]; //= {243,282,306,335,360};
 
 void setup() {
   Serial.begin(9600);
-  check_sensor();
+  setting_sensor();
   pinMode(A0, INPUT);
   pinMode(A1, INPUT);
   pinMode(A2, INPUT);
@@ -43,7 +43,7 @@ void setup() {
 }
 
 void loop() {
-  //drive_white_background();
+  drive_white_background();
   drive_black_background();
 }
 
@@ -145,7 +145,7 @@ void pControl(int current_line){
  
 }
 
-int white_current_line(){
+int whiteground_current_line(){
   if(sensor_value[0]<std_sensor[0]){
     return 1;
   }
@@ -163,7 +163,7 @@ int white_current_line(){
   }
 }
 
-int black_current_line(){
+int blackground_current_line(){
   if(sensor_value[0]>std_sensor[0]){
     return 1;
   }
@@ -179,12 +179,12 @@ int black_current_line(){
   else if(sensor_value[4]>std_sensor[4]){
     return 5;
   }
-  /*else if(sensor_value[0]>std_sensor[0] && sensor_value[1]>std_sensor[1] && sensor_value[2]>std_sensor[2] && sensor_value[3]>std_sensor[3] && sensor_value[4]>std_sensor[4]){
+  else if(sensor_value[0]>std_sensor[0] && sensor_value[1]>std_sensor[1] && sensor_value[2]>std_sensor[2] && sensor_value[3]>std_sensor[3] && sensor_value[4]>std_sensor[4]){
     return 3;
-  }*/
+  }
 }
 
-void check_sensor(){
+void setting_sensor(){
   int white_value[5];
   int black_value[5];
   Serial.println("INPUT WHITE");
@@ -218,7 +218,7 @@ void drive_white_background(){
   read_sensor();
   monitoring_sensor();
   on_led_whitebackground();
-  current_line=white_current_line();
+  current_line=whiteground_current_line();
   pControl(current_line);  
   Serial.println(current_line);
 }
@@ -227,7 +227,7 @@ void drive_black_background(){
   read_sensor();
   monitoring_sensor();
   on_led_blackbackground();
-  current_line=black_current_line();
+  current_line=blackground_current_line();
   pControl(current_line);  
   Serial.println(current_line);
 }
