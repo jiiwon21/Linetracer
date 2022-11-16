@@ -5,10 +5,12 @@
 #define IN3 9
 #define IN4 12
 #define TGT_line 3
-#define Kp_WHITE 40
+#define Kp_WHITE 18
 #define Kp_BLACK 20
-#define MOTOR_OFFSET_A 90
-#define MOTOR_OFFSET_B 90
+#define MOTOR_OFFSET_A 80
+#define MOTOR_OFFSET_B 80
+#define WHITE_BACKGROUND 0
+#define BLACK_BACKGROUND 1
 
 void read_sensor();
 void monitoring_sensor();
@@ -24,7 +26,7 @@ void drive_black_background();
 bool check_W2B();
 bool check_B2W();
 
-
+int STATE = WHITE_BACKGROUND;
 int sensor_value[5];                                                                                                                                                                                                                                                                                       
 int std_sensor[5]; //= {243,282,306,335,360};
 
@@ -48,15 +50,22 @@ void setup() {
 }
 
 void loop() {
-  //drive_white_background();
-  //drive_black_background();
-  read_sensor();
-  if(check_W2B())
-    Serial.println("STATE CHANGEe W2B");
-
-  if(check_B2W())
-    Serial.println("STATE CHANGE B2W");
-    
+ // drive_white_background();
+ // drive_black_background();
+  
+  switch (STATE)
+  {
+  case WHITE_BACKGROUND:
+    if(check_W2B())
+      STATE = BLACK_BACKGROUND;
+    drive_white_background();
+    break;
+  case BLACK_BACKGROUND:
+    drive_black_background();
+    if(check_B2W())
+      STATE = WHITE_BACKGROUND;
+    break;
+  }
 }
 
 void read_sensor()
@@ -152,8 +161,8 @@ void pControl_white(int current_line){
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, HIGH);
-  analogWrite(ENA, MOTOR_OFFSET_A - control_value);
-  analogWrite(ENB, MOTOR_OFFSET_B + control_value);
+  analogWrite(ENA, MOTOR_OFFSET_A + control_value);
+  analogWrite(ENB, MOTOR_OFFSET_B - control_value);
  
 }
 void pControl_black(int current_line){
@@ -260,14 +269,18 @@ void drive_black_background(){
 
 
 bool check_W2B(){
-  if( sensor_value[0]<std_sensor[0] && sensor_value[4]<std_sensor[4] && ( sensor_value[1]>std_sensor[1] || sensor_value[2]>std_sensor[2] || sensor_value[3]>std_sensor[3] ))
+  if( sensor_value[0]<std_sensor[0] && sensor_value[4]<std_sensor[4] && ( sensor_value[1]>std_sensor[1] || sensor_value[2]>std_sensor[2] || sensor_value[3]>std_sensor[3] )){
+    Serial.println("W2B");
     return true;
+  }
   else
     return false;
 }
 bool check_B2W(){
-  if( sensor_value[0]>std_sensor[0]  && sensor_value[4]>std_sensor[4] && ( sensor_value[1]<std_sensor[1] || sensor_value[2]<std_sensor[2] || sensor_value[3]<std_sensor[3] ))
-    return true;
+  if( sensor_value[0]>std_sensor[0]  && sensor_value[4]>std_sensor[4] && ( sensor_value[1]<std_sensor[1] || sensor_value[2]<std_sensor[2] || sensor_value[3]<std_sensor[3] )){
+    Serial.println("B2W");
+    return true;    
+  }
   else 
     return false;
 }
