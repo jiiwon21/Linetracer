@@ -1,5 +1,5 @@
-#define W2B_BUFF_SIZE 10
-#define B2W_BUFF_SIZE 10
+#define W2B_BUFF_SIZE 30
+#define B2W_BUFF_SIZE 30
 #define ENA 10
 #define ENB 11
 #define IN1 7
@@ -45,8 +45,7 @@ void setup() {
 
 void loop() {
 
-  switch (STATE)
-  {
+  switch (STATE) {
   case WHITE_BACKGROUND:
     drive_white_background();
     if(check_W2B()){
@@ -54,6 +53,7 @@ void loop() {
         Serial.println("BLACK_BACKGROUND");
     }
     break;
+
   case BLACK_BACKGROUND:
     drive_black_background();
     if(check_B2W()){
@@ -61,6 +61,7 @@ void loop() {
       Serial.println("WHITE_BACKGROUND");
     }
     break;
+
   case FINISH:
     if(check_crossline())
       stopp();
@@ -251,21 +252,21 @@ void setting_sensor(){
 void drive_white_background(){
   int current_line;
   read_sensor();
-  monitoring_sensor();
+  //monitoring_sensor();
   on_led_whitebackground();
   current_line=whiteground_current_line();
   pControl_white(current_line);  
-  Serial.println(current_line);
+  //Serial.println(current_line);
 }
 
 void drive_black_background(){
   int current_line;
   read_sensor();
-  monitoring_sensor();
+  //monitoring_sensor();
   on_led_whitebackground();
   current_line=blackground_current_line();
   pControl_black(current_line);  
-  Serial.println(current_line);
+  //Serial.println(current_line);
 }
 
 void stopp(){
