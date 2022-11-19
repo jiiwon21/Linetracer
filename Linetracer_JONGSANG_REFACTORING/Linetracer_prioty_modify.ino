@@ -48,30 +48,24 @@ void loop() {
   switch (STATE)
   {
   case WHITE_BACKGROUND:
-    if(check_W2B()){
-        digitalWrite(13, HIGH);
-        delay(10);
-        digitalWrite(13, LOW);
-        STATE = BLACK_BACKGROUND;
-    }
     drive_white_background();
+    if(check_W2B()){
+        STATE = BLACK_BACKGROUND;
+        Serial.println("BLACK_BACKGROUND");
+    }
     break;
   case BLACK_BACKGROUND:
     drive_black_background();
     if(check_B2W()){
-      digitalWrite(13, HIGH);
-      delay(10);
-      digitalWrite(13, LOW);
-      STATE = WHITE_BACKGROUND;
+      STATE = FINISH;
+      Serial.println("WHITE_BACKGROUND");
     }
     break;
-  /*
   case FINISH:
     if(check_crossline())
       stopp();
     drive_white_background();
     break;
-  */
   }
 }
 
