@@ -222,7 +222,6 @@ int blackground_current_line(){
 void setting_sensor(){
   int white_value[5];
   int black_value[5];
-  Serial.println("INPUT WHITE");
   for (int i = 0; i < 100; i++)
   {
     read_sensor();
@@ -231,9 +230,6 @@ void setting_sensor(){
   {
     white_value[i] = sensor_value[i];
   }
-  Serial.println("READY");
-  delay(5000);
-  Serial.println("INPUT BLACK");
   for (int i = 0; i < 100; i++)
   {
     read_sensor();
@@ -246,7 +242,6 @@ void setting_sensor(){
   {
     std_sensor[i] = ( black_value[i] + white_value[i] ) / 2;
   }
-  Serial.println("SETTING DONE");
 }
 
 void drive_white_background(){
