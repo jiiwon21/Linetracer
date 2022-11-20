@@ -37,6 +37,7 @@ bool check_crossline();
 int STATE = WHITE_BACKGROUND;
 int sensor_value[5];                                                                                                                                                                                                                                                                                       
 int std_sensor[5]; //= {243,282,306,335,360};
+int finish_flag = 0;
 
 void setup() {
   pin_init();
@@ -52,9 +53,13 @@ void loop() {
         STATE = BLACK_BACKGROUND;
         Serial.println("BLACK_BACKGROUND");
     }
+    if (check_crossline() && (finish_flag != 0)) {
+      stopp();
+    }
     break;
 
   case BLACK_BACKGROUND:
+    finish_flag++;
     drive_black_background();
     if(check_B2W()){
       STATE = WHITE_BACKGROUND;
@@ -285,6 +290,7 @@ void stopp(){
   digitalWrite(IN4, HIGH);
   analogWrite(ENA,0);
   analogWrite(ENB,0);
+  delay(1000);
 }
 
 
