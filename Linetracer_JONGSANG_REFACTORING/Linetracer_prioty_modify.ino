@@ -7,8 +7,8 @@
 #define IN3 9
 #define IN4 12
 #define TGT_line 3
-#define Kp_WHITE 24
-#define Kp_BLACK 20
+#define Kp_WHITE 22
+#define Kp_BLACK 22
 #define MOTOR_OFFSET_A 80
 #define MOTOR_OFFSET_B 80
 #define WHITE_BACKGROUND 0
@@ -290,7 +290,7 @@ void stopp(){
   digitalWrite(IN4, HIGH);
   analogWrite(ENA,0);
   analogWrite(ENB,0);
-  delay(1000);
+  delay(3000);
 }
 
 
