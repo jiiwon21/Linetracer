@@ -1,5 +1,5 @@
 #define W2B_BUFF_SIZE 30
-#define B2W_BUFF_SIZE 30
+#define B2W_BUFF_SIZE 200
 #define ENA 10
 #define ENB 11
 #define IN1 7
@@ -208,9 +208,11 @@ int blackground_current_line(){
   else if(sensor_value[4]>std_sensor[4]){
     return 5;
   }
+  /*
   else if(sensor_value[0]>std_sensor[0] && sensor_value[1]>std_sensor[1] && sensor_value[2]>std_sensor[2] && sensor_value[3]>std_sensor[3] && sensor_value[4]>std_sensor[4]){
     return 3;
   }
+  */
 }
 
 void setting_sensor(){
