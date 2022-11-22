@@ -1,6 +1,8 @@
 # 2022 RATS FRESHMAN LINETRACER
-* ![KakaoTalk_20221123_003237084_AdobeExpress](https://user-images.githubusercontent.com/30527114/203356871-09379dec-affa-407a-b5b3-c645de48d021.gif)
+* <img src="https://user-images.githubusercontent.com/30527114/203359807-78da7ee8-835a-4c1b-914a-42149c29d91e.gif">
+* **Linetracer with P-Control**
 * [REF](https://github.com/RATS-make-robot/2022-freshman-linetracer)
+
 ## ISSUE LIST
 ### AS-IS
 1. 바퀴가 슬립남
