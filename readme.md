@@ -1,5 +1,5 @@
 # 2022 RATS FRESHMAN LINETRACER
-![KakaoTalk_20221123_003237084_AdobeExpress](https://user-images.githubusercontent.com/30527114/203356686-ce404f0f-eafb-45b6-a9d2-c66ee2fb94ec.gif)
+* ![KakaoTalk_20221123_003237084_AdobeExpress](https://user-images.githubusercontent.com/30527114/203356871-09379dec-affa-407a-b5b3-c645de48d021.gif)
 * [REF](https://github.com/RATS-make-robot/2022-freshman-linetracer)
 ## ISSUE LIST
 ### AS-IS
