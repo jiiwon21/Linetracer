@@ -1,6 +1,6 @@
 # 2022 RATS FRESHMAN LINETRACER
+![KakaoTalk_20221123_003237084_AdobeExpress](https://user-images.githubusercontent.com/30527114/203356686-ce404f0f-eafb-45b6-a9d2-c66ee2fb94ec.gif)
 * [REF](https://github.com/RATS-make-robot/2022-freshman-linetracer)
-
 ## ISSUE LIST
 ### AS-IS
 1. 바퀴가 슬립남
@@ -8,9 +8,9 @@
 이런 경우 흰배경 상태인줄 알지만, finish 스테이트로 돌입  
 
 ### To-be
-  1-1. 바퀴를 두꺼운 걸로 교체하여 슬립율 감소 (조치완료).  
-  1-2. 약 210g(본인 핸드폰) 하중 가할시 슬립 최소화 되는 것으로 확인됨 -> 이때 토크 부족이 야기될 수 있음. 추후 대책 필요 (OFFSET 증가로 대처 및 조치완료).  
-  2-1. W2B, B2W 함수에 buff 삽입하여 채터링 감소유도 (조치완료). 
+1-1. 바퀴를 두꺼운 걸로 교체하여 슬립율 감소 (조치완료).  
+1-2. 약 210g(본인 핸드폰) 하중 가할시 슬립 최소화 되는 것으로 확인됨 -> 이때 토크 부족이 야기될 수 있음. 추후 대책 필요 (OFFSET 증가로 대처 및 조치완료).  
+2-1. W2B, B2W 함수에 buff 삽입하여 채터링 감소유도 (조치완료). 
 
 ### 회고
 1. FSM을 설계할떄 무어머신으로 설계했지만, 막상 도는 코드는 밀리머신일 수 도 있다. State가 의도되로 안변경될 수 있으니 잘 신경쓰자.
