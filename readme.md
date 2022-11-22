@@ -1,5 +1,5 @@
 # 2022 RATS FRESHMAN LINETRACER
-* 신입생 라트 제작 도움 목적 포크
+* [REF](https://github.com/RATS-make-robot/2022-freshman-linetracer)
 
 ## ISSUE LIST
 ### AS-IS
