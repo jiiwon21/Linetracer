@@ -1,5 +1,7 @@
 # 2022 RATS FRESHMAN LINETRACER
-* 신입생 라트 제작 도움 목적 포크
+* <img src="https://user-images.githubusercontent.com/30527114/203359807-78da7ee8-835a-4c1b-914a-42149c29d91e.gif">
+* **Linetracer with P-Control**
+* [REF](https://github.com/RATS-make-robot/2022-freshman-linetracer)
 
 ## ISSUE LIST
 ### AS-IS
